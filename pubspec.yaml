@@ -9,6 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  test: ^1.24.0 # O la versió més actualitzada
+  flutter_test:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
