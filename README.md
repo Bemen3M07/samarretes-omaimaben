@@ -90,16 +90,66 @@ Interfaz reactiva que actualiza automáticamente el precio
 Validación de entrada de datos
 
 Muestra condicional del precio solo con datos válidos
-![alt text](image-1.png)
-![alt text](image-2.png)
+![alt text](image-1.png) ![alt text](image-2.png)
+
 📂 Estructura del Código
-Copy
-lib/
-├── main.dart            # Punto de entrada
-├── samarretes.dart      # Lógica de negocio (funciones de cálculo)
-test/
-├── widget_test.dart     # Pruebas de la interfaz
-└── samarretes_test.dart # Pruebas unitarias (TDD)
+
+lib/          
+├── samarretes.dart     
+test/    
+└── test.dart # Pruebas unitarias (TDD)
   
   
   
+# 📌 Samarretes App - Pruebas en Flutter
+
+Este proyecto incluye pruebas unitarias e integración para garantizar la correcta funcionalidad de la aplicación.
+
+## 📦 Dependencias añadidas
+Para ejecutar las pruebas, se han agregado las siguientes dependencias en el archivo `pubspec.yaml`:
+
+```yaml
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+```
+
+### 🔹 `flutter_test`
+Esta biblioteca permite escribir y ejecutar **pruebas unitarias** para funciones y widgets individuales.
+
+### 🔹 `integration_test`
+Se usa para pruebas de **integración**, que verifican flujos completos de la aplicación, interactuando con la UI.
+
+---
+
+
+
+### 2️⃣ Pruebas de Integración (`integration_test/`)
+Las pruebas de integración validan la app en su conjunto, asegurando que los elementos de la UI y los cálculos funcionan correctamente.
+
+Ejemplo de prueba en `integration_test/app_test.dart`:
+
+```dart
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  testWidgets('Calcula precio correctamente', (tester) async {
+    await tester.pumpWidget(SamarretesApp());
+
+    await tester.enterText(find.byType(TextField), '2');
+    await tester.tap(find.text('M'));
+    await tester.pump();
+
+    expect(find.text('Preu total: 20.00€'), findsOneWidget);
+  });
+}
+```
+
+**Ejecutar pruebas de integración:**
+```sh
+flutter test integration_test/
+```
+
+---

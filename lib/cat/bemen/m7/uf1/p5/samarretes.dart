@@ -1,18 +1,19 @@
+import 'package:empty/cat/bemen/m7/uf1/p5/samarretes_models.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(SamarretesApp());
+  runApp(SamarretesApp()); // Punto de entrada de la aplicación Flutter
 }
 
 class SamarretesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Calculadora de Samarretes',
+      title: 'Calculadora de Samarretes', // Título de la aplicación
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blue, // Tema de la aplicación
       ),
-      home: SamarretesHomePage(),
+      home: SamarretesHomePage(), // Página principal de la app
     );
   }
 }
@@ -23,14 +24,19 @@ class SamarretesHomePage extends StatefulWidget {
 }
 
 class _SamarretesHomePageState extends State<SamarretesHomePage> {
-  int _numSamarretes = 0;
-  String _talla = 'M';
-  int _descompte = 0;
-  double _preu = 0.0;
+  int _numSamarretes = 0; // Número de samarretes
+  String _talla = 'M'; // Talla seleccionada
+  int _descompte = 0; // Tipo de descuento
+  double _preu = 0.0; // Precio total calculado
 
-  final List<String> _talles = ['S', 'M', 'L', 'XL'];
-  final List<String> _descomptes = ['Cap descompte', '10% de descompte', '20€ per comandes majors de 100€'];
+  final List<String> _talles = ['S', 'M', 'L', 'XL']; // Lista de tallas disponibles
+  final List<String> _descomptes = [ // Lista de opciones de descuento
+    'Cap descompte', 
+    '10% de descompte', 
+    '20€ per comandes majors de 100€'
+  ];
 
+  // Método para calcular el precio total
   void _calculaPreu() {
     setState(() {
       _preu = preuDefinitiu(_numSamarretes, _talla, _descompte);
@@ -41,12 +47,13 @@ class _SamarretesHomePageState extends State<SamarretesHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calculadora de Samarretes'),
+        title: Text('Calculadora de Samarretes'), // Título de la barra superior
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0), // Margen alrededor de los elementos
         child: Column(
           children: [
+            // Campo de texto para ingresar el número de samarretes
             TextField(
               decoration: InputDecoration(labelText: 'Nombre de samarretes'),
               keyboardType: TextInputType.number,
@@ -58,6 +65,8 @@ class _SamarretesHomePageState extends State<SamarretesHomePage> {
               },
             ),
             SizedBox(height: 20),
+            
+            // Selector de talla con botones de radio
             Text('Selecciona la talla:'),
             Row(
               children: _talles.map((talla) {
@@ -79,6 +88,8 @@ class _SamarretesHomePageState extends State<SamarretesHomePage> {
               }).toList(),
             ),
             SizedBox(height: 20),
+            
+            // Selector de descuento con DropdownButton
             DropdownButton<int>(
               value: _descompte,
               items: _descomptes.asMap().entries.map((entry) {
@@ -95,47 +106,13 @@ class _SamarretesHomePageState extends State<SamarretesHomePage> {
               },
             ),
             SizedBox(height: 20),
+            
+            // Muestra el precio total si hay al menos una samarreta seleccionada
             if (_numSamarretes > 0 && _talla.isNotEmpty)
-              Text('Preu total: ${_preu.toStringAsFixed(2)}€'),
+                Text('Preu total: ${_preu.toStringAsFixed(2)}€'),
           ],
         ),
       ),
     );
   }
-}
-
-double calculaPreuSamarretes(int numero, String talla) {
-  double preuUnitari = 0.0;
-  switch (talla) {
-    case 'S':
-      preuUnitari = 8.0;
-      break;
-    case 'M':
-      preuUnitari = 10.0;
-      break;
-    case 'L':
-      preuUnitari = 11.0;
-      break;
-    case 'XL':
-      preuUnitari = 12.0;
-      break;
-    default:
-      preuUnitari = 0.0;
-  }
-  return numero * preuUnitari;
-}
-
-double calculaDescompte(double preu, int tipusDescompte) {
-  if (tipusDescompte == 1) {
-    return preu * 0.10;
-  } else if (tipusDescompte == 2 && preu > 100.0) {
-    return 20.0;
-  }
-  return 0.0;
-}
-
-double preuDefinitiu(int numero, String talla, int descompte) {
-  double preu = calculaPreuSamarretes(numero, talla);
-  double descompteAplicat = calculaDescompte(preu, descompte);
-  return preu - descompteAplicat;
 }

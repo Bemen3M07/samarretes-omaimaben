@@ -1,5 +1,7 @@
-import 'package:empty/samarretes.dart';
 import 'package:test/test.dart';
+import 'package:empty/cat/bemen/m7/uf1/p5/samarretes_models.dart';
+
+
 
 void main() {
   // Grupo de pruebas para calcular el precio de las camisetas
@@ -10,6 +12,7 @@ void main() {
       expect(calculaPreuSamarretes(2, 'M'), equals(20.0));
       expect(calculaPreuSamarretes(3, 'L'), equals(33.0));
     });
+
 
     // Prueba para calcular el descuento del 10%
     test('Calcula descompte del 10%', () {
